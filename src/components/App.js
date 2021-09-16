@@ -6,11 +6,9 @@ import MessageList from './MessageList/MessageList.js';
 
 
 function App() {
-  useEffect(() => {
-    console.log(allMessages);
-  });
-
   const [allMessages, setAllMessages] = useState([])
+
+
   const addMsg = (e) => {
     const newMsg = {
       id: allMessages.length + 1,
@@ -21,6 +19,20 @@ function App() {
     setAllMessages(prev => [...prev, newMsg])
   };
 
+
+  useEffect(() => {
+    if (allMessages.length > 0 && allMessages[allMessages.length - 1].author !== 'Bot') {
+      const newMsg = {
+        id: allMessages.length + 1,
+        text: 'Привет, ' + allMessages[allMessages.length - 1].author + '. Я фиксированное сообщение.',
+        author: 'Bot'
+      };
+      setTimeout(() => {
+
+        setAllMessages(prev => [...prev, newMsg]);
+      }, 1500);
+    }
+  }, [allMessages]);
 
   return (
     <div >
