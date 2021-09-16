@@ -1,4 +1,4 @@
-import listStyle from './MessageList.css'
+import './MessageList.css'
 
 const MessageList = ({ arr, addMessage }) => {
   if (arr) {

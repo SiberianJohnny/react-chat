@@ -2,19 +2,18 @@ import { useState, useEffect } from 'react'
 import MessageList from './MessageList/MessageList.js';
 
 
-const messagesArr = [];
 
 
 
 function App() {
   useEffect(() => {
-    console.log(messagesArr);
+    console.log(allMessages);
   });
 
-  const [allMessages, setAllMessages] = useState(messagesArr)
+  const [allMessages, setAllMessages] = useState([])
   const addMsg = (e) => {
     const newMsg = {
-      id: messagesArr.length + 1,
+      id: allMessages.length + 1,
       text: document.getElementById('message-input').value,
       author: 'Guest'
     };
