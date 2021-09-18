@@ -1,11 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import MessageList from './MessageList/MessageList.js';
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { Box } from '@material-ui/core'
+import ChatList from './ChatList/ChatList.js';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#FFF",
+    },
+    secondary: {
+      main: "#0098FF",
+    },
+  },
+});
 
-
+// const chats = [
+//   {
+//     name: 'Chat1',
+//     id: 1
+//   },
+//   {
+//     name: 'Chat2',
+//     id: 2
+//   }
+// ]
 
 
 function App() {
+  const [allChats, setAllChats] = useState([])
+
   const [allMessages, setAllMessages] = useState([])
 
 
@@ -35,9 +59,12 @@ function App() {
   }, [allMessages]);
 
   return (
-    <div >
-      <MessageList arr={allMessages} addMessage={addMsg} />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <ChatList />
+        <MessageList arr={allMessages} addMessage={addMsg} />
+      </Box>
+    </ThemeProvider >
   );
 }
 
