@@ -34,8 +34,6 @@ const MessageList = ({ arr, addMessage }) => {
               borderColor: theme.palette.secondary.main,
             }}
             variant="outlined"
-          // value={value}
-          // onChange={handleChange} 
           />
           <Button variant="contained" onClick={addMessage} >Enter</Button>
         </Box>

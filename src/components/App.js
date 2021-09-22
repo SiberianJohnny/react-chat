@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
-import MessageList from './MessageList/MessageList.js';
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import { Box } from '@material-ui/core'
 import ChatList from './ChatList/ChatList.js';
+import CurrentChat from './CurrentChat/CurrentChat.js';
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import ProfilePage from "./ProfilePage/ProfilePage.js";
+import { useState } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -15,55 +17,36 @@ const theme = createTheme({
   },
 });
 
-// const chats = [
-//   {
-//     name: 'Chat1',
-//     id: 1
-//   },
-//   {
-//     name: 'Chat2',
-//     id: 2
-//   }
-// ]
-
-
 function App() {
-  const [allChats, setAllChats] = useState([])
-
-  const [allMessages, setAllMessages] = useState([])
-
-
-  const addMsg = (e) => {
-    const newMsg = {
-      id: allMessages.length + 1,
-      text: document.getElementById('message-input').value,
-      author: 'Guest'
-    };
-    e.preventDefault();
-    setAllMessages(prev => [...prev, newMsg])
-  };
-
-
-  useEffect(() => {
-    if (allMessages.length > 0 && allMessages[allMessages.length - 1].author !== 'Bot') {
-      const newMsg = {
-        id: allMessages.length + 1,
-        text: 'Привет, ' + allMessages[allMessages.length - 1].author + '. Я фиксированное сообщение.',
-        author: 'Bot'
-      };
-      setTimeout(() => {
-
-        setAllMessages(prev => [...prev, newMsg]);
-      }, 1500);
-    }
-  }, [allMessages]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <ChatList />
-        <MessageList arr={allMessages} addMessage={addMsg} />
-      </Box>
+      <BrowserRouter>
+        <header>
+          <ul className="navList">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/profile">Profile</Link></li>
+            <li><Link to="/chatlist">Chat List</Link></li>
+          </ul>
+        </header>
+        <Switch>
+          <Route exact path="/">
+            Home Page
+          </Route>
+          <Route exact path="/profile"><ProfilePage /></Route>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Route path="/chatlist">
+              <ChatList />
+            </Route>
+            <Route path="/chatlist/:chatId">
+              <CurrentChat />
+            </Route>
+          </Box>
+          <Route>
+            <h3>Page not found</h3>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </ThemeProvider >
   );
 }
