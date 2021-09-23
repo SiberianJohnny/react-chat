@@ -5,9 +5,13 @@ import { useRef, useEffect } from 'react';
 
 
 
-const MessageList = ({ arr, addMessage }) => {
+const MessageList = ({ arr, addMessage, onChange }) => {
   const theme = useTheme();
   const inputRef = useRef(null);
+
+  const handleChange = ((e) => {
+    return onChange(e.target.value);
+  });
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -18,15 +22,14 @@ const MessageList = ({ arr, addMessage }) => {
       <Card variant="outlined" >
         <ul className='messagesList'>
           {
-            arr.map((item) => (
-              <li key={item.id}>{item.author}: {item.text}</li>
+            arr.map((item, index) => (
+              <li key={index}>{item.author}: {item.text}</li>
             ))
           }
         </ul>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <TextField
             inputRef={input => input && input.focus()}
-            id="message-input"
             placeholder='Введите сообщение'
             style={{
               margin: '20px',
@@ -34,6 +37,7 @@ const MessageList = ({ arr, addMessage }) => {
               borderColor: theme.palette.secondary.main,
             }}
             variant="outlined"
+            onChange={handleChange}
           />
           <Button variant="contained" onClick={addMessage} >Enter</Button>
         </Box>

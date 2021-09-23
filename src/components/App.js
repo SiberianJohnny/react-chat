@@ -5,6 +5,7 @@ import CurrentChat from './CurrentChat/CurrentChat.js';
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import ProfilePage from "./ProfilePage/ProfilePage.js";
 import { useState } from 'react';
+import NoChat from "./NoChat/NoChat.js";
 
 const theme = createTheme({
   palette: {
@@ -17,7 +18,30 @@ const theme = createTheme({
   },
 });
 
+const chatsArr = [{
+  id: 0,
+  name: "Chat1",
+  user: 'Author1',
+  messages: [{ text: "FirstMessage", author: 'Author1' }],
+
+},
+{
+  id: 1,
+  name: "Chat2",
+  user: 'Author2',
+  messages: [{ text: "FirstMessageHereToo!", author: 'Author2' }],
+
+},
+];
+
 function App() {
+
+  const [allChats, setAllChats] = useState(chatsArr);
+
+  const someFunc = (newData) => {
+    setAllChats(prev => [...prev, newData])
+    console.log(newData)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -29,23 +53,29 @@ function App() {
             <li><Link to="/chatlist">Chat List</Link></li>
           </ul>
         </header>
-        <Switch>
-          <Route exact path="/">
-            Home Page
-          </Route>
-          <Route exact path="/profile"><ProfilePage /></Route>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Route path="/chatlist">
-              <ChatList />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Switch>
+            <Route exact path="/">
+              Home Page
             </Route>
-            <Route path="/chatlist/:chatId">
-              <CurrentChat />
+            <Route exact path="/profile">
+              <ProfilePage />
             </Route>
-          </Box>
-          <Route>
-            <h3>Page not found</h3>
-          </Route>
-        </Switch>
+
+            <Route exact path="/chatlist">
+              <ChatList
+                chats={allChats}
+              />
+              <NoChat />
+            </Route>
+            <Route exact path="/chatlist/:chatId">
+              <ChatList
+                chats={allChats}
+              />
+              <CurrentChat chats={allChats} someProp={someFunc} />
+            </Route>
+          </Switch>
+        </Box>
       </BrowserRouter>
     </ThemeProvider >
   );
