@@ -18,13 +18,13 @@ const CurrentChat = ({ chats, someProp }) => {
 
 
   const addMsg = (e) => {
+    e.preventDefault();
     const currentChat = chats[chatId];
     const newMsg = {
       id: chatId,
       name: currentChat.name,
       message: [{ text: msgText, author: currentChat.user }]
     };
-    e.preventDefault();
     setAllMessages(prev => [...prev, newMsg.message]);
     someProp(newMsg)
   };

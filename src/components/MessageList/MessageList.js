@@ -17,33 +17,37 @@ const MessageList = ({ arr, addMessage, onChange }) => {
     inputRef.current?.focus();
   }, []);
 
-  if (arr) {
-    return (
-      <Card variant="outlined" >
-        <ul className='messagesList'>
-          {
-            arr.map((item, index) => (
-              <li key={index}>{item.author}: {item.text}</li>
-            ))
-          }
-        </ul>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <TextField
-            inputRef={input => input && input.focus()}
-            placeholder='Введите сообщение'
-            style={{
-              margin: '20px',
-              backgroundColor: theme.palette.primary.main,
-              borderColor: theme.palette.secondary.main,
-            }}
-            variant="outlined"
-            onChange={handleChange}
-          />
-          <Button variant="contained" onClick={addMessage} >Enter</Button>
-        </Box>
-      </Card >
-    );
-  };
+
+  return (
+    <>
+      {arr ?
+        <Card variant="outlined" >
+
+          <ul className='messagesList'>
+            {
+              arr.map((item, index) => (
+                <li key={index}>{item.author}: {item.text}</li>
+              ))
+            }
+          </ul>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <TextField
+              inputRef={input => input && input.focus()}
+              placeholder='Введите сообщение'
+              style={{
+                margin: '20px',
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.secondary.main,
+              }}
+              variant="outlined"
+              onChange={handleChange}
+            />
+            <Button variant="contained" onClick={addMessage} >Enter</Button>
+          </Box>
+        </Card >
+        : null}
+    </>
+  );
 };
 
 export default MessageList;
