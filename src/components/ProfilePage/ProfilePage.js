@@ -4,8 +4,8 @@ import { checkboxAction } from "../../actions/profilePageActions";
 
 
 const ProfilePage = () => {
-  const profileName = useSelector((state) => state.testName);
-  const profileCheckbox = useSelector((state) => state.testCheckbox);
+  const profileName = useSelector((state) => state.profileReducer.testName);
+  const profileCheckbox = useSelector((state) => state.profileReducer.testCheckbox);
   const checkFunc = (profileCheckbox ? '100% not a robot' : profileName)
 
   const dispatch = useDispatch();

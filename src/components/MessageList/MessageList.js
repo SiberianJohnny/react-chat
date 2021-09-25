@@ -1,22 +1,27 @@
 import './MessageList.css'
 import { TextField, useTheme, Button, Card, Box } from "@material-ui/core";
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 
 
 
-const MessageList = ({ arr, addMessage, onChange }) => {
+const MessageList = ({ arr, addMessage }) => {
+
+  const [newMessage, setNewMessage] = useState("");
+
   const theme = useTheme();
   const inputRef = useRef(null);
 
-  const handleChange = ((e) => {
-    return onChange(e.target.value);
-  });
+  const handleChange = (e) => setNewMessage(e.target.value);
+
+  const sendMessage = () => {
+    addMessage(newMessage)
+    setNewMessage('')
+  }
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
-
 
   return (
     <>
@@ -25,8 +30,8 @@ const MessageList = ({ arr, addMessage, onChange }) => {
 
           <ul className='messagesList'>
             {
-              arr.map((item, index) => (
-                <li key={index}>{item.author}: {item.text}</li>
+              arr.map((item) => (
+                <li key={item.id}>{item.author}: {item.text}</li>
               ))
             }
           </ul>
@@ -40,9 +45,10 @@ const MessageList = ({ arr, addMessage, onChange }) => {
                 borderColor: theme.palette.secondary.main,
               }}
               variant="outlined"
+              value={newMessage}
               onChange={handleChange}
             />
-            <Button variant="contained" onClick={addMessage} >Enter</Button>
+            <Button variant="contained" onClick={sendMessage} >Enter</Button>
           </Box>
         </Card >
         : null}

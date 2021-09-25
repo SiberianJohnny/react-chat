@@ -1,50 +1,35 @@
 import { useState, useEffect } from 'react';
 import MessageList from '../MessageList/MessageList';
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addListItem, addMessage } from '../../actions/messagesActions';
 
-const CurrentChat = ({ chats, someProp }) => {
+const CurrentChat = () => {
   const { chatId } = useParams();
 
-  const allChatMessages = chats.map((item) => (
-    item.messages
-  ))
+  const allMessages = useSelector((state) => state.messagesReducer.messageList)
+  const dispatch = useDispatch();
 
-  const [allMessages, setAllMessages] = useState(allChatMessages)
-
-  let msgText = '';
-  const eventhandler = data => {
-    msgText = data;
+  const onAddMessage = (message) => {
+    dispatch(addMessage(chatId, message));
   }
 
-
-  const addMsg = (e) => {
-    e.preventDefault();
-    const currentChat = chats[chatId];
-    const newMsg = {
-      id: chatId,
-      name: currentChat.name,
-      message: [{ text: msgText, author: currentChat.user }]
-    };
-    setAllMessages(prev => [...prev, newMsg.message]);
-    someProp(newMsg)
-  };
-
   useEffect(() => {
-    if (allMessages.length > 0 && allMessages[allMessages.length - 1].author !== 'Bot') {
+    const lastMessage = allMessages[chatId];
+    if (lastMessage && lastMessage[lastMessage.length - 1].author !== 'Bot') {
       const newMsg = {
-        text: 'Привет, ' + allMessages[allMessages.length - 1].author + '. Я фиксированное сообщение.',
+        text: 'Привет, ' + lastMessage[lastMessage.length - 1].author + '. Я фиксированное сообщение.',
         author: 'Bot'
       };
       setTimeout(() => {
-
-        setAllMessages(prev => [...prev, newMsg]);
+        dispatch(addMessage(chatId, newMsg.text, newMsg.author));
       }, 1500);
     }
   }, [allMessages]);
 
   return (
     <>
-      <MessageList arr={allMessages[chatId]} addMessage={addMsg} onChange={eventhandler} />
+      <MessageList arr={allMessages[chatId]} addMessage={onAddMessage} />
     </>
   );
 };

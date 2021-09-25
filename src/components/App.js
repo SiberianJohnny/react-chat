@@ -18,30 +18,7 @@ const theme = createTheme({
   },
 });
 
-const chatsArr = [{
-  id: 0,
-  name: "Chat1",
-  user: 'Author1',
-  messages: [{ text: "FirstMessage", author: 'Author1' }],
-
-},
-{
-  id: 1,
-  name: "Chat2",
-  user: 'Author2',
-  messages: [{ text: "FirstMessageHereToo!", author: 'Author2' }],
-
-},
-];
-
 function App() {
-
-  const [allChats, setAllChats] = useState(chatsArr);
-
-  const someFunc = (newData) => {
-    setAllChats(prev => [...prev, newData])
-    console.log(newData)
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,16 +40,12 @@ function App() {
             </Route>
 
             <Route exact path="/chatlist">
-              <ChatList
-                chats={allChats}
-              />
+              <ChatList />
               <NoChat />
             </Route>
             <Route exact path="/chatlist/:chatId">
-              <ChatList
-                chats={allChats}
-              />
-              <CurrentChat chats={allChats} someProp={someFunc} />
+              <ChatList />
+              <CurrentChat />
             </Route>
           </Switch>
         </Box>
