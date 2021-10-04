@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import MessageList from '../MessageList/MessageList';
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage } from '../../actions/messagesActions';
+import { addBotMessage, addMessage } from '../../actions/messagesActions';
 
 const CurrentChat = () => {
   const { chatId } = useParams();
@@ -16,15 +16,7 @@ const CurrentChat = () => {
 
   useEffect(() => {
     const lastMessage = allMessages[chatId];
-    if (lastMessage && lastMessage[lastMessage.length - 1].author !== 'Bot') {
-      const newMsg = {
-        text: 'Привет, ' + lastMessage[lastMessage.length - 1].author + '. Я фиксированное сообщение.',
-        author: 'Bot'
-      };
-      setTimeout(() => {
-        dispatch(addMessage(chatId, newMsg.text, newMsg.author));
-      }, 1500);
-    }
+    dispatch(addBotMessage(lastMessage, chatId))
   }, [allMessages]);
 
   return (
