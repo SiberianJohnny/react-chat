@@ -16,7 +16,7 @@ const persistConfig = {
 const reducers = combineReducers({
   profileReducer,
   chatsReducer,
-  messagesReducer
+  messagesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

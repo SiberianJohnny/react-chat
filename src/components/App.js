@@ -6,6 +6,7 @@ import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import ProfilePage from "./ProfilePage/ProfilePage.js";
 import { useState } from 'react';
 import NoChat from "./NoChat/NoChat.js";
+import Api from "./API/covidAPI.js";
 
 const theme = createTheme({
   palette: {
@@ -28,6 +29,7 @@ function App() {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/profile">Profile</Link></li>
             <li><Link to="/chatlist">Chat List</Link></li>
+            <li><Link to="/API">COVID-19</Link></li>
           </ul>
         </header>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -46,6 +48,12 @@ function App() {
             <Route exact path="/chatlist/:chatId">
               <ChatList />
               <CurrentChat />
+            </Route>
+            <Route exact path="/API">
+              <Api />
+            </Route>
+            <Route>
+              <h3>Page not found</h3>
             </Route>
           </Switch>
         </Box>
