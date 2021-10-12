@@ -12,14 +12,22 @@ const ProfilePage = () => {
   const mutateState = () => {
     dispatch(checkboxAction())
   };
+
+  const { user } = useSelector(state => state.authReducer)
+
   return (
-    <div>
-      Profile Page.
-      <br />
-      Hello, {checkFunc}!
-      <br />
-      Click if you are not a robot <Checkbox onClick={mutateState} />
-    </div>
+    <>
+      {
+        user &&
+        <div>
+          Profile Page.
+          <br />
+          Hello, {checkFunc}!
+          <br />
+          Click if you are not a robot <Checkbox onClick={mutateState} />
+        </div>
+      }
+    </>
   );
 };
 

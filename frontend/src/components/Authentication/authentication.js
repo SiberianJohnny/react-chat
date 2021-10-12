@@ -10,7 +10,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { user, error } = useSelector((state) => state.user);
+  const { user, error } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     if (error) {
@@ -22,7 +22,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      history.push("/chatlist");
+      history.push("/home");
     }
   }, [user]);
 

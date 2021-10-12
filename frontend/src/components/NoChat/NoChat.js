@@ -2,7 +2,7 @@
 
 const NoChat = () => {
   return (
-    <p> Выберите чат </p>
+    <p>  </p>
   )
 }
 

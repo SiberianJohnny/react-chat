@@ -34,12 +34,14 @@ export default function AlignItemsList({ }) {
     dispatch(deleteChat(e.target.value))
   }
 
+  const { user } = useSelector(state => state.authReducer)
+
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {
         allChats.map((chat, index) => (
           <ListItem key={index}>
-            <Link to={`/chatlist/${chat.id}`}>
+            <Link to={`/home/chatlist/${chat.id}`}>
               {chat.name}
             </Link>
             <button onClick={onDeleteChat} value={chat.id}>X</button>
