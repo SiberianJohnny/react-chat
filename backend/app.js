@@ -22,6 +22,13 @@ const chats = {
   ]
 };
 
+const messages = {
+  messageList: {
+    0: [{ id: 'id00', text: "FirstMessage", author: 'Author1' }],
+    1: [{ id: 'id10', text: "FirstMessageHereToo!", author: 'Author2' }]
+  }
+};
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -44,7 +51,6 @@ app.get("/chats", (req, res) => {
   res.json(chats);
 });
 
-
 app.post("/chats", (req, res) => {
   const { name } = req.body;
   chats.chatList.push({ id: `${chats.chatList.length}`, name: name });
@@ -55,6 +61,17 @@ app.delete("/chats", (req, res) => {
   const chatsIndex = chats.chatList.findIndex(p => p.id == req.query.id);
   chats.chatList.splice(chatsIndex, 1);
   return res.json(chats);
+});
+
+app.get("/messages", (req, res) => {
+  res.json(messages);
+});
+
+app.post("/messages", (req, res) => {
+  const { chatId, message, author } = req.body;
+  const currentList = messages.messageList[chatId] || [];
+  currentList.push({ id: `${chatId}${currentList.length}`, text: `${message}`, author: author })
+  res.json(messages)
 });
 
 app.listen(3001, () => {

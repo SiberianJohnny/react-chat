@@ -4,16 +4,18 @@ import ListItem from '@material-ui/core/ListItem';
 import { Button, Dialog, DialogTitle, TextField } from '@material-ui/core';
 
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChat, deleteChat } from '../../actions/chatListActions';
-import { addListItem } from '../../actions/messagesActions';
-
+import { addChat, deleteChat, fetchChats } from '../../actions/chatListActions';
 
 export default function AlignItemsList({ }) {
 
   const [visible, setVisible] = useState(false);
   const [newChatName, setNewChatName] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchChats());
+  }, []);
 
   const allChats = useSelector((state) => state.chatsReducer.chatList)
   const dispatch = useDispatch();
@@ -24,7 +26,6 @@ export default function AlignItemsList({ }) {
 
   const onAddChat = () => {
     dispatch(addChat(newChatName));
-    // dispatch(addListItem('id' + allChats.length))
     setNewChatName("");
     handleClose();
   };
@@ -33,7 +34,6 @@ export default function AlignItemsList({ }) {
     dispatch(deleteChat(e.target.value))
   }
 
-  const { user } = useSelector(state => state.authReducer)
 
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
