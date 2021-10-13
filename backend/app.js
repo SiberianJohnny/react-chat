@@ -8,7 +8,20 @@ const users = [
   { email: "test123@test.ru", password: "test" },
 ];
 
-const strings = ["test1", "test2", "test3", "test4", "test5", "test6"];
+const chats = {
+  chatList: [{
+    id: '0',
+    name: "Chat1"
+
+  },
+  {
+    id: '1',
+    name: "Chat2"
+
+  },
+  ]
+};
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -27,20 +40,21 @@ app.post("/auth", (req, res) => {
   res.sendStatus(400);
 });
 
-app.get("/test", (req, res) => {
-  res.json(strings);
+app.get("/chats", (req, res) => {
+  res.json(chats);
 });
 
-app.delete("/test", (req, res) => {
-  console.log(req.query, "id delete");
+
+app.post("/chats", (req, res) => {
+  const { name } = req.body;
+  chats.chatList.push({ id: `${chats.chatList.length}`, name: name });
+  res.json(chats);
 });
 
-app.post("/test", (req, res) => {
-  console.log(req.body, "body");
-  const { value } = req.body;
-  console.log(value);
-  strings.push(value);
-  res.json(strings);
+app.delete("/chats", (req, res) => {
+  const chatsIndex = chats.chatList.findIndex(p => p.id == req.query.id);
+  chats.chatList.splice(chatsIndex, 1);
+  return res.json(chats);
 });
 
 app.listen(3001, () => {

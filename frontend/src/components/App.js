@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
-import { BrowserRouter, Link, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import Auth from "./Authentication/authentication.js";
 import SecureRoute from "./HomePage/SecureRoute/SecureRoute.js";
 import HomePage from "./HomePage/HomePage.js";

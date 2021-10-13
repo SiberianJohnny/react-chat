@@ -10,7 +10,6 @@ import { addChat, deleteChat } from '../../actions/chatListActions';
 import { addListItem } from '../../actions/messagesActions';
 
 
-
 export default function AlignItemsList({ }) {
 
   const [visible, setVisible] = useState(false);
@@ -25,7 +24,7 @@ export default function AlignItemsList({ }) {
 
   const onAddChat = () => {
     dispatch(addChat(newChatName));
-    dispatch(addListItem('id' + allChats.length))
+    // dispatch(addListItem('id' + allChats.length))
     setNewChatName("");
     handleClose();
   };
