@@ -54,12 +54,19 @@ app.get("/chats", (req, res) => {
 app.post("/chats", (req, res) => {
   const { name } = req.body;
   chats.chatList.push({ id: `${chats.chatList.length}`, name: name });
+
+  var keys = Object.keys(messages.messageList).length
+  messages.messageList[keys] = [];
+
   res.json(chats);
 });
 
 app.delete("/chats", (req, res) => {
   const chatsIndex = chats.chatList.findIndex(p => p.id == req.query.id);
   chats.chatList.splice(chatsIndex, 1);
+
+  delete messages.messageList[chatsIndex]
+
   return res.json(chats);
 });
 

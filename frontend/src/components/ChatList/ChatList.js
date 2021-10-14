@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addChat, deleteChat, fetchChats } from '../../actions/chatListActions';
+import { fetchMessages } from '../../actions/messagesActions'
 
 export default function AlignItemsList({ }) {
 
@@ -34,6 +35,9 @@ export default function AlignItemsList({ }) {
     dispatch(deleteChat(e.target.value))
   }
 
+  useEffect(() => {
+    dispatch(fetchMessages());
+  }, [allChats]);
 
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
